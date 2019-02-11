@@ -18,3 +18,9 @@ cd readable/client
 yarn
 yarn start
 ```
+
+Ou via o Qrcode do App no [Expo](https://expo.io/) 
+
+![imagem](./QRCode.png)
+
+Link pagina [Expo](https://expo.io/@joseasousa/TodoList)
