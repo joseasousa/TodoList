@@ -1,12 +1,12 @@
-import { all, takeLatest } from 'redux-saga/effects';
+import { all, takeLatest } from 'redux-saga/effects'
 
-import { Types as MarkerTypes } from 'store/ducks/markers';
-import { addMarkerRequest } from './markers';
+import { Types as AuthTypes } from '../ducks/auth'
+import { login, logout, createProfile } from './auth'
 
-export default function* rootSaga() {
-  return yield all([takeLatest(
-    MarkerTypes.ADD_REQUEST,
-    addMarkerRequest,
-  ),
-  ]);
+export default function * rootSaga () {
+  return yield all([
+    takeLatest(AuthTypes.SIGNIN_REQUEST, login),
+    takeLatest(AuthTypes.CREATE_PROFILE_REQUEST, createProfile),
+    takeLatest(AuthTypes.SIGNOUT_REQUEST, logout)
+  ])
 }

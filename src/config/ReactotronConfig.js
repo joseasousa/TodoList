@@ -3,13 +3,13 @@ import Reactotron, {
   openInEditor,
   overlay,
   asyncStorage,
-  networking,
-} from 'reactotron-react-native';
-import sagaPlugin from 'reactotron-redux-saga';
+  networking
+} from 'reactotron-react-native'
+import sagaPlugin from 'reactotron-redux-saga'
 
-import { reactotronRedux } from 'reactotron-redux';
+import { reactotronRedux } from 'reactotron-redux'
 
-let tron;
+let tron
 
 if (__DEV__) {
   tron = Reactotron.configure({ name: 'Todo List' })
@@ -20,11 +20,11 @@ if (__DEV__) {
     .use(networking())
     .use(reactotronRedux())
     .use(sagaPlugin())
-    .connect();
+    .connect()
 
-  tron.clear();
+  tron.clear()
 
-  global.tron = tron;
+  global.console.tron = tron
 }
 
-export default tron;
+export default tron
