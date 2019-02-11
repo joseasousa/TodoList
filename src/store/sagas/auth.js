@@ -1,60 +1,26 @@
-import { put } from 'redux-saga/effects';
-import jwtDecode from 'jwt-decode';
-import api from 'services/api';
-import { Creators as ActionCreator } from '../ducks/auth';
+import { put } from 'redux-saga/effects'
+import { AsyncStorage } from 'react-native'
+import { Creators as ActionCreator } from '../ducks/auth'
 
-export function* login(action) {
-  let token = global.localStorage.getItem('token');
+export function * login (action) {
+  const password = yield AsyncStorage.getItem('password')
+  const { passwd } = action.payload
 
-  const userLogin = yield api.post('/login', {
-    email: action.payload.email,
-    passwd: action.payload.passwd,
-  });
-
-  if (userLogin.data.token) {
-    token = userLogin.data.token;
-    global.localStorage.setItem('token', token);
-
-    const user = jwtDecode(token);
-    global.localStorage.setItem('user', user);
-
-    yield put(ActionCreator.signinSuccess(user));
+  if (password === passwd) {
+    yield put(ActionCreator.signinSuccess())
   } else {
-    yield put(ActionCreator.signinFailure(userLogin.data.message));
+    yield put(ActionCreator.signinFailure('senha nao cadastrada'))
   }
 }
 
-export function* logout() {
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-
-  yield put(ActionCreator.signoutSuccess());
+export function * logout () {
+  yield put(ActionCreator.signoutSuccess())
 }
 
-export function* auth() {
-  const token = localStorage.getItem('token');
+export function * createProfile (action) {
+  const { passwd } = action.payload
 
-  if (token) {
-    const user = jwtDecode(token);
-    try {
-      yield put(ActionCreator.authSuccess(user));
-    } catch (err) {
-      yield put(ActionCreator.authFailure(`invalid token: ${err}`));
-    }
-  } else {
-    yield put(ActionCreator.authFailure('erro'));
-  }
-}
+  yield AsyncStorage.setItem('password', passwd)
 
-export function* createProfile(action) {
-  const userToSave = {
-    ...action.payload,
-  };
-  const user = yield api.post('/', userToSave);
-
-  if (user && user.data && user.data.error) {
-    yield put(ActionCreator.createProfileFailure(user.data.message));
-  } else {
-    yield put(ActionCreator.createProfileSuccess(user));
-  }
+  yield put(ActionCreator.createProfileSuccess())
 }

@@ -1,18 +1,31 @@
-import { createDrawerNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator, createAppContainer } from 'react-navigation'
 
-import LoginScreen from 'pages/Login';
-import TaskScreen from 'pages/Tasks';
+import LoginScreen from 'pages/Login'
+import TaskScreen from 'pages/Tasks'
+import CadScreeen from 'pages/Cad'
 
-const Router = createDrawerNavigator(
+const Router = createStackNavigator(
   {
     Login: {
-      screen: LoginScreen,
+      navigationOptions: {
+        header: null
+      },
+      screen: LoginScreen
     },
     Task: {
-      screen: TaskScreen,
+      navigationOptions: {
+        header: null
+      },
+      screen: TaskScreen
     },
+    Cad: {
+      navigationOptions: {
+        header: null
+      },
+      screen: CadScreeen
+    }
   },
-  { initialRouteName: 'Login' },
-);
+  { initialRouteName: 'Login' }
+)
 
-export default createAppContainer(Router);
+export default createAppContainer(Router)

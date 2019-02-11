@@ -1,5 +1,5 @@
 module.exports = function (api) {
-  api.cache(true);
+  api.cache(true)
   const plugins = [
     [
       require.resolve('babel-plugin-module-resolver'),
@@ -7,13 +7,13 @@ module.exports = function (api) {
         root: ['./src/'],
         alias: {
           test: './test',
-          underscore: 'lodash',
-        },
-      },
-    ]];
+          underscore: 'lodash'
+        }
+      }
+    ]]
 
   return {
     presets: ['babel-preset-expo'],
-    plugins,
-  };
-};
+    plugins
+  }
+}
